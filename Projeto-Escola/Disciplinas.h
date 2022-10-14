@@ -1,27 +1,32 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h> 
-#include <math.h>
-#include "funcoes_gerais.h"
-//#include "Alunos.h"
-#define TAM_NOME 20
-#define TAM_TURMA 50 
-#define TAM_COD_DISCPL 6
+#define TAM_NOME 51
+static int cod = 300;
 
-static int cod = 200;
-
-//ESTRUTURA DE DADOS DO TIPO *DISCIPLINA*
+//Struct disciplinas
 typedef struct{
-char nome[TAM_NOME];
-int codigo;
-char nome_professor[TAM_NOME];
-int qtd_aluno;
-} disciplina;
+	char nome[TAM_NOME];
+	int codigo;
+	char nome_professor[TAM_NOME];
+	int qtd_aluno;
+} Disciplina;
 
+//Funções
+//Validação de Nome
+//int validarNome (char n[]);
 
-int menuDisciplina (disciplina discpl[], int qtd_disciplina);
-int CadastrarDisciplina(disciplina discpl[], int qtd);
-void ListarDisciplina (disciplina discpl[], int qtd);
-int ExcluirDisciplina (disciplina discpl[], int qtd);
-void AtualizarDisciplina (disciplina discpl[], int qtd);
+//Menu disciplinas
+int menuDisciplinas (Disciplina discpl[], int qtd_disciplina);
+
+//Leitura dados da disciplina (nome, professor, código)
+int CadastrarDisciplina(Disciplina discpl[], int qtd);
+
+//Listar disciplinas
+void ListarDisciplina (Disciplina discpl[], int qtd);
+
+//Buscar disciplina
+int LocalizarDisciplina (Disciplina discpl[], int qtd);
+
+//Excluir disciplina
+int ExcluirDisciplina (Disciplina discpl[], int qtd);
+
+//Atualizar disciplina
+void AtualizarDisciplina (Disciplina discpl[], int qtd);

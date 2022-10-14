@@ -1,34 +1,31 @@
-// Struct para cadastro de professores
-typedef struct {
-  int dia, mes, ano;
-} data;
+static int MATRICULA_PROFESSOR = 200;
 
-typedef struct {
-  
+// Struct professores
+typedef struct{  
 	int matricula;
 	char nome[101], sexo;
-  data nascimento;
+  int dia, mes, ano;
   long int cpf;	
 } Professor;
 
 //Funções
 //Validação de Nome
-int validarTexto(char string[]);
+int validarTextoProf(char string[]);
 
 //Menu professores
 int menuProfessores(void);
 
-//Leitura dados do aluno (matrícula, nome, cpf, nascimento e sexo)
-int inserirMatriculas(Professor lista[], int qtd_aluno); 
+//Leitura dados do professor (matrícula, nome, cpf, nascimento e sexo)
+int inserirMatriculaProf(Professor lista[], int qtd_professores); 
 
-//Listar alunos matriculados
-void listarMatriculas(Professor lista[], int qtd_aluno);
+//Listar professores matriculados
+void listarMatriculasProf(Professor lista[], int qtd_professores);
 
 //Listar nome e matrícula
-void listarMatriculasExclusao(Professor lista[], int qtd_aluno);
+void listarMatriculasExclusaoProf(Professor lista[], int qtd_professores);
 
 //Excluir professor
-void excluirMatricula(Professor lista[], int qtd_aluno){	
+int excluirMatriculaProf(Professor lista[], int qtd_professores);	
 
-//Função principal de professores
-int mainProfessores(Professor lista[], int qtd_aluno);
+//Função Principal professores
+int mainProfessores(Professor lista[], int qtd_professores);

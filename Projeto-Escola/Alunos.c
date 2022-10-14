@@ -1,38 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "FuncoesGerais.h"
 #include "Alunos.h"
 #define TAM_LINHA 13
 #define TAM_MAX_ALUNOS 10
 
 //Função Principal de Alunos
-int mainAlunos(Aluno lista[], int qtd_aluno){	
+int menuAlunos(Aluno lista[], int qtd_aluno){	
 	Aluno lista_alunos[TAM_MAX_ALUNOS];
-	int qtd_alunos; 
-	int opcao;	
-		
+	int opcao, qtd_alunos;
+
+	putchar('\n');
+	linha('*', TAM_LINHA);
+	puts("\nMenu Estudantes");
+	linha('*', TAM_LINHA);
+	puts("\n[0] Menu Principal\n[1] Inserir\n[2] Listar\n[3] Excluir\n[4] Atualizar");
+	printf("Sua opção: "); scanf("%d ", &opcao);
+	fflush(stdin);
+	
 	while (opcao!=0){
-	opcao = menuAlunos();
 		switch(opcao){				
 			case 0: 
 				break;				
 			case 1:{
-				qtd_alunos = inserirMatriculas(lista_alunos, qtd_alunos);
+				qtd_alunos = inserirAluno(lista_alunos, qtd_aluno);
 				break;						
 			}
-			case 2:{	
-				listarMatriculas(lista_alunos, qtd_alunos);
+			/*case 2:{	
+				listarMatriculasAluno(lista_alunos, qtd_alunos);
 				break;
 			}
 			case 3:{	
 				puts("Escolha a matrícula para ser excluída");	
-				listarMatriculasExclusao(lista_alunos, qtd_alunos);
-				excluirMatricula(lista_alunos, qtd_alunos);
-				qtd_alunos--;
+				listarMatriculasExclusaoAluno(lista_alunos, qtd_alunos);
+				qtd_alunos = excluirMatriculaAluno(lista_alunos, qtd_alunos);				
 				putchar('\n');
 				break;
-			}
-			
+			}*/			
 			default:{
 				puts("\n\nOpção inválida\n\n");
 				break;
@@ -43,9 +48,8 @@ int mainAlunos(Aluno lista[], int qtd_aluno){
 }
 
 //Funções
-
 // Validação de Nome
-int validarTexto(char string[]){
+int validarTextoAluno(char string[]){
   int i, tam_str, tam_max, validador = 0;
   tam_max = 20;
 
@@ -57,7 +61,7 @@ int validarTexto(char string[]){
 }
 
 //Menu Alunos
-int menuAlunos(){	
+/*int menuAlunos(){	
 	int opcao;
 	
 	putchar('\n');
@@ -65,67 +69,101 @@ int menuAlunos(){
 	puts("\nMenu Estudantes");
 	linha('*', TAM_LINHA);
 	puts("\n[0] Menu Principal\n[1] Inserir\n[2] Listar\n[3] Excluir\n[4] Atualizar");
-	printf("Sua opção: "); scanf("%d", &opcao);
+	printf("Sua opção: "); scanf("%d ", &opcao);
 	fflush(stdin);
 
 	return opcao;
-}
+}*/
 
-// Leitura dados do aluno (matrícula, nome, cpf, nascimento e sexo)
-int inserirMatricula(Aluno lista[], int qtd_aluno){	
+// Cadastro aluno (matrícula, nome, cpf, nascimento e sexo)
+int inserirAluno(Aluno lista[], int qtd_aluno){	
 	char texto[101];
-	static int MAT = 100;
+	//tmp_sexo, tmp_cpf[12];	
+	//int validadorData = 1, validadorSexo = 1, validadorCpf = 1;
+	//Aluno tmp_data;	
 	
-	__fpurge(stdin);
+	//__fpurge(stdin);
+	fflush(stdin);
   linha('*', TAM_LINHA);
 	puts("\nNovo Aluno:");
+	
+	lista[qtd_aluno].matricula = MATRICULA_ALUNO++;
+	printf("Matrícula = %d\n", MATRICULA_ALUNO);
   
 	printf("Nome = ");
   fgets(texto, 101, stdin);
-  if (validarTexto(texto) > 0)
+	//__fpurge(stdin);
+	fflush(stdin);
+	
+  if (validarTextoAluno(texto) > 0)
     printf("\nNome não cadastrado.\nLimite de caracteres excedido.\n");
   else{
     strcpy(lista[qtd_aluno].nome, texto);
   }
-	
-  puts("Data de nascimento");
-  printf("\tDia = "); scanf("%d", &lista[qtd_aluno].nascimento.dia);
-  printf("\tMês = "); scanf("%d", &lista[qtd_aluno].nascimento.mes);
-  printf("\tAno = "); scanf("%d", &lista[qtd_aluno].nascimento.ano);
-  printf("Cpf = "); scanf("%ld", &lista[qtd_aluno].cpf);
-  __fpurge(stdin);
+	/*
+	while(validadorData = 0){
+		puts("Data de nascimento");
+	  printf("\tDia = "); scanf("%d ", &tmp_data.dia);
+	  printf("\tMês = "); scanf("%d ", &tmp_data.mes);
+	  printf("\tAno = "); scanf("%d ", &tmp_data.ano);
+		validadorData = validarNascimento (tmp_data.dia, tmp_data.mes, tmp_data.ano);
+			if(validadorData > 0){
+				lista[qtd_aluno].dia = tmp_data.dia;
+				lista[qtd_aluno].mes = tmp_data.mes;
+				lista[qtd_aluno].ano = tmp_data.ano;
+			}
+			else
+				printf("Dados inválidos.");
+	}
+
+	while(validadorCpf = 0){
+		printf("Cpf = "); 
+		scanf("%s ", tmp_cpf);
+	  //__fpurge(stdin);
+		fflush(stdin);
+		validadorCpf = validarCPF(tmp_cpf);
+			if(validadorCpf > 0)
+				strcpy(lista[qtd_aluno].cpf, tmp_cpf);
+			else
+				printf("Dados inválidos.");
+	}		
   
-	printf("Sexo\n\tf = feminino\n\tm = masculino\n\to = outro\n\tSua resposta = "); 
-	scanf("%c", &lista[qtd_aluno].sexo);
-	__fpurge(stdin);
-	
-	lista[qtd_aluno].matricula = MAT++;
-	printf("Matrícula = %d\n", MAT);
-	
+	while (validadorSexo = 0){
+		printf("Sexo\n\tf = feminino\n\tm = masculino\n\to = outro\n\tSua resposta = "); 
+		scanf("%c ", &tmp_sexo);
+		//__fpurge(stdin);
+		fflush(stdin);
+		validadorSexo = validarSexo(tmp_sexo);
+		if(validadorSexo > 0)
+			strcpy(lista[qtd_aluno].sexo, tmp_sexo);
+		else
+			printf("Dados inválidos.");
+	}	
+	*/
 	qtd_aluno++;
 	
 	linha('*', TAM_LINHA);
 	puts("\nCadastro realizado com sucesso.");
-	printf("Total de alunos cadastrados = %0d", qtd_aluno);
+	//printf("Total de alunos cadastrados = %0d", qtd_aluno);
 	
   return qtd_aluno;
 }
-
+/*
 //Listar alunos cadastrados
-void listarMatriculas(Aluno lista[], int qtd_aluno){	
+void listarAluno(Aluno lista[], int qtd_aluno){	
 	for(int i=0; i<qtd_aluno; i++){
 			linha('*', TAM_LINHA);
+			printf("\nMatrícula = %d", lista[i].matricula);
 			printf("\nAluno %d", i+1);			
 			printf("\nNome = %s", lista[i].nome);
-			printf("Data de nascimento = %d/%d/%d", lista[i].nascimento.dia, lista[i].nascimento.mes, lista[i].nascimento.ano);
-			printf("\nCpf = %ld", lista[i].cpf);
+			/*printf("Data de nascimento = %d/%d/%d", lista[i].dia, lista[i].mes, lista[i].ano);
+			printf("\nCpf = %s", lista[i].cpf);
 			printf("\nSexo = %c", lista[i].sexo);
-			printf("\nMatrícula = %d", lista[i].matricula);
 		}
 }
 
 //Listar Matrículas para exlcusão
-void listarMatriculasExclusao(Aluno lista[], int qtd_aluno){	
+void listarExclusaoAluno(Aluno lista[], int qtd_aluno){	
 	for(int i=0; i<qtd_aluno; i++){
 			linha('*', TAM_LINHA);						
 			printf("\nNome = %s", lista[i].nome);
@@ -134,7 +172,7 @@ void listarMatriculasExclusao(Aluno lista[], int qtd_aluno){
 }
 
 //Excluir aluno 
-void excluirMatricula(Aluno lista[], int qtd_aluno){	
+int excluirAluno(Aluno lista[], int qtd_aluno){	
 	int opcao, i;	
 	
 	if(qtd_aluno < 1) 
@@ -147,7 +185,10 @@ void excluirMatricula(Aluno lista[], int qtd_aluno){
 		for(i=0; i<qtd_aluno; i++){
 				if(opcao == lista[i].matricula)
 					lista[i] = lista[i+1];		
-		}		
+		}
+		qtd_aluno--;
 		puts("Exclusão realizada com sucesso.");
 	}
+	return qtd_aluno;
 }
+*/

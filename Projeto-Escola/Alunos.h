@@ -1,34 +1,30 @@
-// Struct para cadastro de aluno
-typedef struct {
-  int dia, mes, ano;
-} data;
+static int MATRICULA_ALUNO = 100;
 
-typedef struct {
-  
+// Struct alunos
+typedef struct{  
 	int matricula;
-	char nome[101], sexo;
-  data nascimento;
-  long int cpf;	
+	char nome[101], cpf[12], sexo;
+  int dia, mes, ano;	
 } Aluno;
 
 //Funções
 //Validação de Nome
-int validarTexto(char string[]);
+int validarTextoAluno(char string[]);
 
 //Menu Alunos
-int menuAlunos(void);
+//int menuAlunos(void);
 
 //Leitura dados do aluno (matrícula, nome, cpf, nascimento e sexo)
-int inserirMatriculas(Aluno lista[], int qtd_aluno); 
+int inserirAluno(Aluno lista[], int qtd_aluno); 
 
 //Listar alunos matriculados
-void listarMatriculas(Aluno lista[], int qtd_aluno);
+void listarAluno(Aluno lista[], int qtd_aluno);
 
 //Listar nome e matrícula
-void listarMatriculasExclusao(Aluno lista[], int qtd_aluno);
+void listarExclusaoAluno(Aluno lista[], int qtd_aluno);
 
 //Excluir aluno da lista
-void excluirMatricula(Aluno lista[], int qtd_aluno){	
+int excluirAluno(Aluno lista[], int qtd_aluno);	
 
 //Função Principal de Alunos
-int mainAlunos(Aluno lista[], int qtd_aluno);
+int menuAlunos(Aluno lista[], int qtd_aluno);
