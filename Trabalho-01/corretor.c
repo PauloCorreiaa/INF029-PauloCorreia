@@ -11,6 +11,7 @@
 // #################################################
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "PauloCorreia20202160015.h"
 
@@ -27,12 +28,12 @@ int main()
 {
     //testSomar();
     //testFatorial();
-    testQ1();
-    /*testQ2();
+    /*testQ1();
+    testQ2();
     testQ3();
     testQ4();
-    testQ5();
-    testQ6();*/
+    testQ5();*/
+    testQ6();
 }
 
 void testSomar(){
@@ -53,8 +54,14 @@ void testFatorial(){
 
 void testQ1(){
     char str[11];
-    strcpy(str, "29/02/2015");
+    strcpy(str, "31/04/2015");
     printf("%d\n", q1(str) == 0);
+		strcpy(str, "29/02/2015");
+    printf("%d\n", q1(str) == 0);
+		strcpy(str, "30/02/2015");
+    printf("%d\n", q1(str) == 0);
+		strcpy(str, "28/02/2015");
+    printf("%d\n", q1(str) == 1);
     strcpy(str, "29/02/2012");
     printf("%d\n", q1(str) == 1);
     strcpy(str, "9/13/2014");

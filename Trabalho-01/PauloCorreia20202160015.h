@@ -20,14 +20,14 @@
 #ifndef TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
 #define TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
 
-typedef struct DQ{
+typedef struct{
     int iDia; 
     int iMes;
     int iAno;
     int valido; // 0 se inválido, e 1 se válido 
-} DataQuebrada;
+} Data_Quebrada;
 
-typedef struct Qtd{
+typedef struct{
     int qtdDias;
     int qtdMeses;
     int qtdAnos;
@@ -36,12 +36,13 @@ typedef struct Qtd{
 
 int somar(int x, int y); //função utilizada para testes
 int fatorial(int x); //função utilizada para testes
-int q1(char data[]);
-DiasMesesAnos q2(char datainicial[], char datafinal[]);
+void linha(char c, int num); //imprimir linha caracteres
+int q1(char data[]); //validação data
+DiasMesesAnos q2(char datainicial[], char datafinal[]); //operações 
 int q3(char *texto, char c, int isCaseSensitive);
 int q4(char *strTexto, char *strBusca, int posicoes[30]);
 int q5(int num);
 int q6(int numerobase, int numerobusca);
-DataQuebrada quebraData(char data[]);
+Data_Quebrada quebraData(char data[]);
 
 #endif  // TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H

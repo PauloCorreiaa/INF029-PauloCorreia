@@ -19,6 +19,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "PauloCorreia20202160015.h" 
 
 // ## função utilizada para testes  ##
@@ -64,74 +66,63 @@ int teste(int a){
     return val;
 }
 
-//Converter data de string para inteiro
-DataQuebrada quebraData(char data[]){
-  DataQuebrada dq;
-  char sDia[3];
-	char sMes[3];
-	char sAno[5];
-	int i;
+//converter data de string para inteiro
+Data_Quebrada quebraData(char data[]){
+  Data_Quebrada data_int;
+  char sDia[3], sMes[3], sAno[5];
+	int i, j;
 
-	for(i = 0; data[i] != '/'; i++){
-		sDia[i] = data[i];	
-	}
-	if(i == 1 || i == 2){ // testa se tem 1 ou dois digitos
-		sDia[i] = '\0';  // coloca o barra zero no final
-	}
+	//Dia
+	for(i = 0; data[i] != '/'; i++)
+		sDia[i] = data[i];		
+	if(i == 1 || i == 2) // testa se tem 1 ou dois digitos
+		sDia[i] = '\0';  // coloca o barra zero no final		 	
 	else{
-		dq.valido = 0;
-    return dq;
-  }  
+		data_int.valido = 0;
+    return data_int;}  
 	
-	int j = i + 1; //anda 1 cada para pular a barra
+	//Mês
+	j = i + 1; //anda 1 cada para pular a barra
 	i = 0;
-	for (; data[j] != '/'; j++){
+	for(; data[j] != '/'; j++){
 		sMes[i] = data[j];
-		i++;
-	}
+		i++;}
 	if(i == 1 || i == 2){ // testa se tem 1 ou dois digitos
-		sMes[i] = '\0';  // coloca o barra zero no final
-	}
+		sMes[i] = '\0';}  // coloca o barra zero no final	
 	else{
-		dq.valido = 0;
-    return dq;
-  }
-	
-	j = j + 1; //anda 1 cada para pular a barra
+		data_int.valido = 0;
+    return data_int;}
+
+	//Ano
+	j += 1; //anda 1 cada para pular a barra
 	i = 0;	
 	for(; data[j] != '\0'; j++){
 	 	sAno[i] = data[j];
-	 	i++;
-	}
-	if(i == 2 || i == 4){ // testa se tem 2 ou 4 digitos
-		sAno[i] = '\0';  // coloca o barra zero no final
-	}
+	 	i++;}
+	if(i == 2 || i == 4) // testa se tem 2 ou 4 digitos
+		sAno[i] = '\0';  // coloca o barra zero no final	
 	else{
-		dq.valido = 0;
-    return dq;
-  }
-	//Verificação somente números
-  dq.iDia = atoi(sDia);
-		if(dq.iDia < 0){
-			dq.valido = 0;
-			return dq;}
-	//Verificação somente números
-  dq.iMes = atoi(sMes);
-	if(dq.iMes < 0){
-			dq.valido = 0;
-			return dq;}
-  //Verificação somente números
-	dq.iAno = atoi(sAno);
-	if(dq.iAno < 0){
-			dq.valido = 0;
-			return dq;}
+		data_int.valido = 0;
+    return data_int;}
+	
+	//Conversão em inteiros
+	data_int.iDia = atoi(sDia); 
+  data_int.iMes = atoi(sMes);	
+	data_int.iAno = atoi(sAno);	
+	
+	data_int.valido = 1;
 
-	dq.valido = 1;
-    
-  return dq;
+	return data_int;
 }
 
-// Questão 01
+//imprimir linha caracteres
+void linha(char c, int num){
+	int i;
+
+	for(i=1; i<num; i++)
+		printf("%c ", c);}
+
+// Questão 01 #OK#
 /*
  Q1 = validar data
 @objetivo
@@ -143,20 +134,75 @@ DataQuebrada quebraData(char data[]){
     1 -> se data válida
  @restrições
     Não utilizar funções próprias de string (ex: strtok)   
-    pode utilizar strlen para pegar o tamanho da string
+    Pode utilizar strlen para pegar o tamanho da string
  */
 int q1(char data[]){
-  int datavalida;
+  int dataValida;
+	Data_Quebrada dataQuebrada;
+	
+  //converter string em inteiro
+  dataQuebrada = quebraData(data);  
+	dataValida = dataQuebrada.valido;
+	
+	//printf("\nDia = %d\nMês = %d\nAno = %d", dataQuebrada.iDia, dataQuebrada.iMes, dataQuebrada.iAno);
+	//printf("\nValidador = ");
 
-  //quebrar a string data em strings sDia, sMes, sAno
-  DataQuebrada dataQuebrada = quebraData(data);  
-	datavalida = dataQuebrada.valido;
-	if (datavalida < 0)
-    return 1;
-  else
-    return 0;
+	//Validações
+	if(dataValida < 1) //data inválida			
+    return 0;	
+	
+	//verificar intervalos de dias		
+	if(dataQuebrada.iDia > 0 && dataQuebrada.iDia <= 31){	
+		//verificar intervalos de meses
+		if(dataQuebrada.iMes > 0 && dataQuebrada.iMes <= 12){
+			//limites dias dos meses
+			switch(dataQuebrada.iMes){					
+				case 2 :
+					if(dataQuebrada.iDia <= 29){
+						//limite dias fevereiro e ano bissexto	
+						if((dataQuebrada.iAno % 400 == 0) || ((dataQuebrada.iAno % 4 == 0) && (dataQuebrada.iAno % 100 != 0)))
+							return 1;
+						else{ 
+							if(dataQuebrada.iDia == 29)
+								return 0;
+							else
+								//retorno limite dias fevereiro
+								return 1;} 
+					} 							
+					else
+						return 0;
+					break;
+				//limite meses 30 dias
+				case 4 :
+				case 6 :
+				case 9 :
+				case 11: 
+					if(dataQuebrada.iDia <= 30)
+						return 1;
+					else
+						return 0;
+					break;			
+				//limite meses 31 dias
+				default: 
+					if(dataQuebrada.iDia <= 31)
+						return 1;
+					else
+						return 0;
+					break;
+				//retorno dias dos meses
+				return 1;}  
+			//retorno meses
+			return 1;} 
+		
+		else
+			return 0;
+		//retorno dias
+		return 1;}
+	
+	else
+		return 0;
 }
-
+	
 // Questão 02
 /*
  Q2 = diferença entre duas datas
@@ -192,24 +238,47 @@ DiasMesesAnos q2(char datainicial[], char datafinal[]){
     }    
 }
 
-// Questão 03
+// Questão 03 #OK#
 /*
  Q3 = encontrar caracter em texto
  @objetivo
     Pesquisar quantas vezes um determinado caracter ocorre em um texto
  @entrada
     uma string texto, um caracter c e um inteiro que informa se é uma pesquisa Case Sensitive ou não. Se isCaseSensitive = 1, a pesquisa deve considerar diferenças entre maiúsculos e minúsculos.
-        Se isCaseSensitive != 1, a pesquisa não deve  considerar diferenças entre maiúsculos e minúsculos.
+        Se isCaseSensitive != 1, a pesquisa não deve considerar diferenças entre maiúsculos e minúsculos.
  @saida
     Um número n >= 0.
  */
 int q3(char *texto, char c, int isCaseSensitive){
-    int qtdOcorrencias = -1;
+  int qtdOcorrencias = 0;
+	int i;
+	char texto_tmp[250], char_tmp;
 
-    return qtdOcorrencias;
-}
+	strcpy(texto_tmp, texto);
+	//Sem Diferenças entre Caixa Caractere		
+	if(isCaseSensitive != 1){	
+		char_tmp = tolower(c);
+		for(i = 0; texto_tmp[i] != '\0'; i++){			
+				//Converter Texto Caixa Baixa			
+				texto_tmp[i] = tolower(texto_tmp[i]);
+				if(texto_tmp[i] == char_tmp)
+					qtdOcorrencias++;}
+	}
+	//Com Diferenças entre Caixa Caractere		
+	else{		
+		for(i = 0; texto_tmp[i] != '\0'; i++){
+			if(texto_tmp[i] == c)		
+				qtdOcorrencias++;}
+	}	
+	//printf("\nTexto saída = %s", texto_tmp);
+	//printf("\nCaixa = %d", isCaseSensitive);
+	//printf("\nChar = %c", c);	
+	//printf("\nOcorrências = %d", qtdOcorrencias);
+	printf ("\nValidador = ");
+	return qtdOcorrencias;
+}	
 
-// Questão 04
+// Questão 04 #OK#
 /*
  Q4 = encontrar palavra em texto
  @objetivo
@@ -225,11 +294,118 @@ int q3(char *texto, char c, int isCaseSensitive){
         O retorno da função, n, nesse caso seria 1;
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30]){
-    int qtdOcorrencias = -1;
-    return qtdOcorrencias;
+	int qtdOcorrencias = 0, tam_strBusca;
+	int i = 0, j = 0, h = 0; //contadores strTexto, strBusca e posicoes
+	int index_strTexto = 0, validador = 1, char_especial, validador_charEspecial = 0;
+	int posicao_inicial = 0, posicao_final;	
+
+	//imprimir linha caracteres
+	putchar('\n');
+	linha('*', 28);
+	putchar('\n');
+	//retorno entrada e saída
+	printf("\nstrTexto = %s", strTexto);
+	printf("\nstrBusca = %s", strBusca);	
+	printf("\nNº Ocorrências = %d\n", qtdOcorrencias);
+	//imprimir linha caracteres
+	putchar('\n');
+	linha('*', 28);
+	putchar('\n');
+	
+	//tamanho	strBusca
+	tam_strBusca = strlen(strBusca) + 1;
+	index_strTexto = i;
+	
+	//percorrer strTexto
+	for(i = 0; strTexto[i] != '\0'; i++){
+		printf("\nstrTexto[%d]", i);
+		printf("\nChar Entrada = %c", strTexto[i]);
+		printf("\nChar Busca = %c\n", strBusca[j]);
+		
+		//validador_charEspecial = 0;
+		
+		//converter char/int
+		char_especial = (int)strTexto[i];
+		//verificar caracter especial
+		if(char_especial < 0)			
+			validador_charEspecial++;
+		
+		//verificar strBusca
+		if(strTexto[i] == strBusca[j]){			
+			index_strTexto = i;
+			posicao_inicial = i;
+			//comparar strBusca/strTexto
+			for(validador = 1, j = 0; strBusca[j] != '\0'; j++, index_strTexto++){
+				if(strBusca[j] == strTexto[index_strTexto])
+					validador++;
+				//verificar caracter especial
+				if(char_especial < 0)
+					validador_charEspecial++;}				
+				
+				//zerar contador strBusca;
+				j = 0;				
+				//validar strBusca
+				if(validador == tam_strBusca){
+					//imprimir linha caracteres
+					putchar('\n');
+					linha('*', 12);
+					putchar('\n');					
+					//validar char especial					
+					if(validador_charEspecial > 0){						
+						//incrementar nº ocorrências
+						qtdOcorrencias++;
+						printf("\nOcorrência nº %d", qtdOcorrencias);
+						//atribuir posição continuidade percorrer strTexto 
+						i = index_strTexto - 1;					
+						//atribuir posicao inicial strBusca em strTexto
+						posicoes[h] = posicao_inicial - 1;						
+						printf("\nposicoes[%d] = %d", h, posicoes[h]);
+						h++;
+						//atribuir posicao final strBusca em strTexto
+						posicao_final = (posicao_inicial + tam_strBusca) - 2;
+						posicoes[h] = posicao_final - 1;
+						printf("\nposicoes[%d] = %d\n", h, posicoes[h]);					
+						//incrementar vetor posicoes				
+						h++;}						
+					else{
+						//incrementar nº ocorrências
+						qtdOcorrencias++;
+						printf("\nOcorrência nº %d", qtdOcorrencias);
+						//atribuir posição continuidade percorrer strTexto 
+						i = index_strTexto - 1;
+						//atribuir posicao inicial strBusca em strTexto
+						posicoes[h] = posicao_inicial + 1;											
+						printf("\nposicoes[%d] = %d", h, posicoes[h]);
+						h++;
+						//atribuir posicao final strBusca em strTexto
+						posicao_final = posicao_inicial + tam_strBusca;
+						posicoes[h] = posicao_final - 1;
+						printf("\nposicoes[%d] = %d\n", h, posicoes[h]);
+						//incrementar vetor posicoes				
+						h++;}
+					
+					//imprimir linha caracteres
+					putchar('\n');
+					linha('*', 12);
+					putchar('\n');}
+			}
+		}	
+		
+	//retorno entrada e saída
+	//printf("\nstrTexto = %s", strTexto);
+	//printf("\nstrBusca = %s", strBusca);	
+	//printf("\nNº Ocorrências = %d\n", qtdOcorrencias);
+	//printf("Validador char especial = %d", validador_charEspecial);
+	//imprimir linha caracteres
+	putchar('\n');
+	linha('*', 28);
+	putchar('\n');
+	//printf ("\nValidadores\n");	
+	
+	return qtdOcorrencias;
 }
 
-// Questão 05
+// Questão 05 #OK#
 /*
  Q5 = inverte número
  @objetivo
@@ -240,7 +416,19 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
     Número invertido
  */
 int q5(int num){
-    return num;
+	int resto, numInvertido = 0;
+
+	//printf("\nEntrada = %d", num);	
+	while(num != 0){		
+		resto = num % 10;		
+		numInvertido = numInvertido * 10 + resto;
+		num /= 10;}
+	
+	num = numInvertido;
+	//printf("\nNúmero invertido = %d", numInvertido);
+	//printf("\nValidador = ");
+	
+	return num;
 }
 
 // Questão 06
@@ -254,6 +442,20 @@ int q5(int num){
     Quantidade de vezes que número de busca ocorre em número base
  */
 int q6(int numerobase, int numerobusca){
-    int qtdOcorrencias;
-    return qtdOcorrencias;
+  int qtdOcorrencias;
+	int num, numEntrada, resto;
+
+	num = numerobase;
+	while(num != 0){
+		resto = num % 10;
+		numInvertido = numInvertido * 10 + resto;
+		num /= 10;
+		if(numerobusca == resto)
+			qtdOcorrencias++;
+			printf("\nNúmero ocorrências = %d", qtdOcorrencias);	
+			printf("\nnum = %d", num);}
+
+	printf("\nValidador = ");
+	
+   return qtdOcorrencias;
 }
