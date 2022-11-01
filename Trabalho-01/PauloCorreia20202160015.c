@@ -274,7 +274,7 @@ int q3(char *texto, char c, int isCaseSensitive){
 	//printf("\nCaixa = %d", isCaseSensitive);
 	//printf("\nChar = %c", c);	
 	//printf("\nOcorrências = %d", qtdOcorrencias);
-	printf ("\nValidador = ");
+	//printf ("\nValidador = ");
 	return qtdOcorrencias;
 }	
 
@@ -298,7 +298,7 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
 	int i = 0, j = 0, h = 0; //contadores strTexto, strBusca e posicoes
 	int index_strTexto = 0, validador = 1, char_especial, validador_charEspecial = 0;
 	int posicao_inicial = 0, posicao_final;	
-
+	/*
 	//imprimir linha caracteres
 	putchar('\n');
 	linha('*', 28);
@@ -311,17 +311,18 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
 	putchar('\n');
 	linha('*', 28);
 	putchar('\n');
-	
+	*/
 	//tamanho	strBusca
 	tam_strBusca = strlen(strBusca) + 1;
 	index_strTexto = i;
 	
 	//percorrer strTexto
 	for(i = 0; strTexto[i] != '\0'; i++){
+		/*
 		printf("\nstrTexto[%d]", i);
 		printf("\nChar Entrada = %c", strTexto[i]);
 		printf("\nChar Busca = %c\n", strBusca[j]);
-		
+		*/
 		//validador_charEspecial = 0;
 		
 		//converter char/int
@@ -346,51 +347,54 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
 				j = 0;				
 				//validar strBusca
 				if(validador == tam_strBusca){
+					/*
 					//imprimir linha caracteres
 					putchar('\n');
 					linha('*', 12);
-					putchar('\n');					
+					putchar('\n');
+					*/
 					//validar char especial					
 					if(validador_charEspecial > 0){						
 						//incrementar nº ocorrências
 						qtdOcorrencias++;
-						printf("\nOcorrência nº %d", qtdOcorrencias);
+						//printf("\nOcorrência nº %d", qtdOcorrencias);
 						//atribuir posição continuidade percorrer strTexto 
 						i = index_strTexto - 1;					
 						//atribuir posicao inicial strBusca em strTexto
 						posicoes[h] = posicao_inicial - 1;						
-						printf("\nposicoes[%d] = %d", h, posicoes[h]);
+						//printf("\nposicoes[%d] = %d", h, posicoes[h]);
 						h++;
 						//atribuir posicao final strBusca em strTexto
 						posicao_final = (posicao_inicial + tam_strBusca) - 2;
 						posicoes[h] = posicao_final - 1;
-						printf("\nposicoes[%d] = %d\n", h, posicoes[h]);					
+						//printf("\nposicoes[%d] = %d\n", h, posicoes[h]);					
 						//incrementar vetor posicoes				
 						h++;}						
 					else{
 						//incrementar nº ocorrências
 						qtdOcorrencias++;
-						printf("\nOcorrência nº %d", qtdOcorrencias);
+						//printf("\nOcorrência nº %d", qtdOcorrencias);
 						//atribuir posição continuidade percorrer strTexto 
 						i = index_strTexto - 1;
 						//atribuir posicao inicial strBusca em strTexto
 						posicoes[h] = posicao_inicial + 1;											
-						printf("\nposicoes[%d] = %d", h, posicoes[h]);
+						//printf("\nposicoes[%d] = %d", h, posicoes[h]);
 						h++;
 						//atribuir posicao final strBusca em strTexto
 						posicao_final = posicao_inicial + tam_strBusca;
 						posicoes[h] = posicao_final - 1;
-						printf("\nposicoes[%d] = %d\n", h, posicoes[h]);
+						//printf("\nposicoes[%d] = %d\n", h, posicoes[h]);
 						//incrementar vetor posicoes				
 						h++;}
-					
+					/*
 					//imprimir linha caracteres
 					putchar('\n');
 					linha('*', 12);
-					putchar('\n');}
+					putchar('\n');*/
+				}					
 			}
 		}	
-		
+	/*	
 	//retorno entrada e saída
 	//printf("\nstrTexto = %s", strTexto);
 	//printf("\nstrBusca = %s", strBusca);	
@@ -401,7 +405,7 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
 	linha('*', 28);
 	putchar('\n');
 	//printf ("\nValidadores\n");	
-	
+	*/
 	return qtdOcorrencias;
 }
 
@@ -431,7 +435,7 @@ int q5(int num){
 	return num;
 }
 
-// Questão 06
+// Questão 06 #OK#
 /*
  Q6 = ocorrência de um número em outro
  @objetivo
@@ -442,20 +446,84 @@ int q5(int num){
     Quantidade de vezes que número de busca ocorre em número base
  */
 int q6(int numerobase, int numerobusca){
-  int qtdOcorrencias;
-	int num, numEntrada, resto;
-
-	num = numerobase;
-	while(num != 0){
-		resto = num % 10;
-		numInvertido = numInvertido * 10 + resto;
-		num /= 10;
-		if(numerobusca == resto)
-			qtdOcorrencias++;
-			printf("\nNúmero ocorrências = %d", qtdOcorrencias);	
-			printf("\nnum = %d", num);}
-
-	printf("\nValidador = ");
+  int i, j, h, l; //contadores
+	int numTmp, numTmp_busca, resto;
+	int num_digitos_entrada = 0, num_digitos_busca = 0, posicao_inicial;
+	int validador = 0, qtdOcorrencias = 0;
+	/*
+	//imprimir linha caracteres
+	putchar('\n');
+	linha('*', 20);
+	putchar('\n');
+	*/
+	//printf("\nNº entrada = %d", numerobase);
 	
-   return qtdOcorrencias;
-}
+	//calcular número dígitos numerobase
+	numTmp = q5(numerobase);
+	while(numTmp != 0){				
+		numTmp /= 10;
+		num_digitos_entrada++;}
+	
+	int vetor_numTmp[num_digitos_entrada];	
+	//converter int/vetor numerobase
+	numTmp = q5(numerobase);
+	//printf("\nNº entrada inverso = %d", numTmp);
+	l = 0;
+	while(l <= num_digitos_entrada){
+		vetor_numTmp[l] = numTmp % 10;
+		numTmp /= 10;
+		l++;}
+	/*
+	//imprimir vetor_num_tmp
+	printf("\nvetor_numTmp = ");
+	for(h = 0; h < num_digitos_entrada; h++)
+		printf("%d", vetor_numTmp[h]);
+	
+	printf("\nNº dígitos = %d", num_digitos_entrada);
+	*/
+	//putchar('\n');
+	numTmp_busca = q5(numerobusca);
+	//printf("\nNº entrada busca = %d", numerobusca);
+	//printf("\nNº entrada busca inverso = %d", numTmp_busca);
+	
+	//calcular número dígitos numerobusca	
+	while(numTmp_busca != 0){				
+		numTmp_busca /= 10;
+		num_digitos_busca++;}	
+	
+	//converter int/vetor numerobusca
+	int vetor_numTmp_busca[num_digitos_busca];
+	numTmp_busca = q5(numerobusca);
+	//printf("\nNº entrada inverso = %d", numTmp_busca);
+	l = 0;
+	while(l <= num_digitos_busca){
+		vetor_numTmp_busca[l] = numTmp_busca % 10;
+		numTmp_busca /= 10;
+		l++;}
+	/*
+	//imprimir vetor_num_tmp_busca
+	printf("\nvetor_num_tmp_busca = ");
+	for(h = 0; h < num_digitos_busca; h++)
+		printf("%d", vetor_numTmp_busca[h]);
+
+	printf("\nNº dígitos = %d\n", num_digitos_busca);
+	*/
+	//verificar numerobusca	
+	for(i = 0, j = 0; i < num_digitos_entrada; i++){
+		if(vetor_numTmp[i] == vetor_numTmp_busca[j]){
+			l = i;
+			for(validador = 0, j = 0; j < num_digitos_busca; j++, l++){
+				if(vetor_numTmp_busca[j] == vetor_numTmp[l]){
+					validador++;}
+			}
+		j = 0;	
+		if(validador == num_digitos_busca){
+			qtdOcorrencias++;
+			i = l - 1;}
+		}
+	}
+	
+	//printf("\nNº ocorrências = %d", qtdOcorrencias);
+	//printf("\nValidador = ");
+	
+  return qtdOcorrencias;}

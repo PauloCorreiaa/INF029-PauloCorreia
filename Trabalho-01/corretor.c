@@ -26,14 +26,20 @@ void testQ6();
 
 int main()
 {
-    //testSomar();
+    //testSomar();		
     //testFatorial();
-    /*testQ1();
-    testQ2();
-    testQ3();
+    testQ1();
+		putchar('\n');
+    //testQ2();
+    //putchar('\n');
+		testQ3();
+		putchar('\n');
     testQ4();
-    testQ5();*/
+		putchar('\n');
+    testQ5();
+		putchar('\n');
     testQ6();
+		putchar('\n');
 }
 
 void testSomar(){
