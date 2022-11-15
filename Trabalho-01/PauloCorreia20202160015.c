@@ -426,7 +426,8 @@ int q5(int num){
 	while(num != 0){		
 		resto = num % 10;		
 		numInvertido = numInvertido * 10 + resto;
-		num /= 10;}
+		num /= 10;
+		//printf("Nº = %d", num);}
 	
 	num = numInvertido;
 	//printf("\nNúmero invertido = %d", numInvertido);

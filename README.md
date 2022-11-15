@@ -14,3 +14,7 @@ Trabalho realizado pelos discentes *Paulo Correia* e *Lídia Campos*.
 
 # Trabalho 01
 Implementação de um arquivo teste para funções.
+
+# Lista 02
+## Ponteiros
+	Lista de exercícios sobre ponteiros em C.
