@@ -4,7 +4,7 @@ Semestre: 2022.2
 
 # Lista 01 
 ## Funções
-	Lista de exercícios sobre funções em C.
+Lista de exercícios sobre funções em C.
 
 # Projeto Escola
 Trabalho realizado pelos discentes *Paulo Correia* e *Lídia Campos*.
@@ -17,4 +17,8 @@ Implementação de um arquivo teste para funções.
 
 # Lista 02
 ## Ponteiros
-	Lista de exercícios sobre ponteiros em C.
+Lista de exercícios sobre ponteiros em C.
+
+# Trabalho 02
+## Ponteiros
+Programa para simular uma estrutura de dados com ponteiros.
