@@ -1,19 +1,36 @@
 #ifndef TRABALHO2_ESTRUTURAVETORES_H
 #define TRABALHO2_ESTRUTURAVETORES_H
 
+/*
 // enumeracoes (enum) ajudam a deixar o codigo mais legivel, possibilitando que voce de significado
 // as suas constantes, para mais informacoes https://en.cppreference.com/w/c/language/enum
 // as constantes do enum em sua inicialização vao representar o numero resultante da soma do valor da
 // constante anterior mais 1, caso nao haja valor algum na primeira constante ela vai ser inicializada com 0
+*/
 enum { TODAS_ESTRUTURAS_AUXILIARES_VAZIAS = -11, NOVO_TAMANHO_INVALIDO, NUMERO_INEXISTENTE,
        ESTRUTURA_AUXILIAR_VAZIA, TAMANHO_INVALIDO, SEM_ESPACO_DE_MEMORIA, POSICAO_INVALIDA,
        JA_TEM_ESTRUTURA_AUXILIAR, SEM_ESTRUTURA_AUXILIAR, SEM_ESPACO, SUCESSO };
 
+//struct para lista encadeada
 typedef struct reg {
     int conteudo;
     struct reg *prox;
 } No;
 
+//struct para vetor de struct alocadas dinamicamente
+typedef struct{
+	//verificar existência de estrutura auxiliar 
+	int validador_estrut_aux;
+	//tamanho da estrutura auxiliar
+	int tam_max_estrutura_aux;
+	//valor elemento estrutura auxiliar
+	int cont_estrutura_aux;
+	//endereço para estrutura auxiliar	
+	int *vetor_estrutura_auxiliar;
+} tp_registro;
+
+void linha(char c, int num);
+int ehPosicaoValida(int posicao);
 int criarEstruturaAuxiliar(int posicao, int tamanho);
 int inserirNumeroEmEstrutura(int posicao, int valor);
 int excluirNumeroDoFinaldaEstrutura(int posicao);
@@ -31,5 +48,7 @@ void destruirListaEncadeadaComCabecote(No **inicio);
 void inicializar();
 void finalizar();
 void dobrar(int *x);
+
+
 
 #endif  // TRABALHO2_ESTRUTURAVETORES_H
