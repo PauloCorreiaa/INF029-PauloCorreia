@@ -354,7 +354,7 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 	if(novoTamanho < 0)
 		retorno = NOVO_TAMANHO_INVALIDO;
 		//validação de posição que deve ser entre 1 e 10
-		else if(ehPosicaoValida(posicao) < 0 && ehPosicaoValida(posicao) != -1)
+		else if(ehPosicaoValida(posicao) < SUCESSO)
 			retorno = POSICAO_INVALIDA;
 		//validação de estrutura auxiliar existente	
 		else if(vetorPrincipal[posicao - 1].validador_estrut_aux == 0)
